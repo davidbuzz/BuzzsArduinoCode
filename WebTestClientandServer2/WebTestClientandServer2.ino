@@ -1,10 +1,11 @@
 /*
-  Web  Server AND Web Client! 
+  Web  Server AND Web Client - together.  using an Arduino Wiznet Ethernet shield. 
  
- A simple web server that shows the value of the analog input pins.
- using an Arduino Wiznet Ethernet shield. 
- AND 
- A simple web client that does a HTTP request to a URL on a server on the LAN, and presents you the results.
+ A simple web SERVER that shows the value of the analog input pins, and lets you toggle the pin13 LED on and off.  :-) 
+   //server web address will look like ( eg)  http://192.168.0.253:80/ when submited
+ AND ALSO: 
+ A simple web CLIENT that does a HTTP request to a different URL  on another server on the LAN, and presents you the results.
+  // open serial monitor and send an 'e' to run the HTTP client and to see what the arduino receives
  
  Circuit:
  * Ethernet shield attached to pins 10, 11, 12, 13  
@@ -185,33 +186,6 @@ void loop()
  
 }
 
-//////////////////////////
-void sendGET2() //client function to send/receie GET request data.
-{
-  if (outgoingclient.connect(remoteserver,80)) {
-    Serial.println("connected");
-    outgoingclient.println("GET /ard/arduino.txt HTTP/1.0");
-    outgoingclient.println();
-  } 
-  else {
-    Serial.println("connection failed");
-    Serial.println();
-  }
-
-  while(outgoingclient.connected() && !outgoingclient.available()) delay(1); //waits for data
-  while (outgoingclient.connected() || outgoingclient.available()) { //connected or data available
-    char c = outgoingclient.read();
-    Serial.print(c);
-  }
-
-  Serial.println();
-  Serial.println("disconnecting.");
-  Serial.println("==================");
-  Serial.println();
-  outgoingclient.stop();
-
-}
-
   // now we optionally can do an outgoing client...... 
 void sendGET1() {
     // if there's incoming data from the net connection.
@@ -290,8 +264,3 @@ void sendGET1() {
 }
 
 
-
-// this method makes a HTTP connection to the server:
-void httpRequest() {
- 
-}
